@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)http://localhost:8080/snap-after-layout/ -->
+<html lang="en" class="js-focus-visible"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+
+    <title>Scroll snapping after layout</title>
+<meta name="description" content="Starting in Chrome 81, scrollers remain snapped when the page layout changes. In other words, you no longer need to add event listeners to force resnapping. ">
+
+<meta itemprop="name" content="Scroll snapping after layout">
+<meta itemprop="description" content="Starting in Chrome 81, scrollers remain snapped when the page layout changes. In other words, you no longer need to add event listeners to force resnapping. ">
+<meta itemprop="image" content="https://webdev.imgix.net/images/social.png?auto=format&amp;fit=max&amp;w=1200">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://web.dev/snap-after-layout/">
+<meta property="og:site_name" content="web.dev">
+<meta property="og:title" content="Scroll snapping after layout">
+<meta property="og:description" content="Starting in Chrome 81, scrollers remain snapped when the page layout changes. In other words, you no longer need to add event listeners to force resnapping. ">
+<meta property="og:image" content="https://webdev.imgix.net/images/social.png?auto=format&amp;fit=max&amp;w=1200">
+<meta property="og:image:alt" content="">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Scroll snapping after layout">
+<meta name="twitter:description" content="Starting in Chrome 81, scrollers remain snapped when the page layout changes. In other words, you no longer need to add event listeners to force resnapping. ">
+<meta name="twitter:image" content="https://webdev.imgix.net/images/social.png?auto=format&amp;fit=max&amp;w=1200">
+
+    <link rel="alternate" href="http://localhost:8080/feed.xml" type="application/atom+xml" data-title="web.dev feed">
+    <link rel="preconnect" href="http://www.gstatic.com/" crossorigin="">
+    <link rel="preconnect" href="http://fonts.gstatic.com/" crossorigin="">
+    <link rel="preconnect" href="http://fonts.googleapis.com/" crossorigin="">
+    <link rel="preconnect" href="http://www.google-analytics.com/" crossorigin="">
+    <link rel="stylesheet" href="./Scroll snapping after layout_files/css">
+    <link rel="stylesheet" href="./Scroll snapping after layout_files/app.css">
+    <link rel="manifest" href="http://localhost:8080/manifest.webmanifest">
+    
+    <link rel="shortcut icon" href="http://localhost:8080/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:8080/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:8080/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="http://localhost:8080/images/apple-touch-icon.png">
+    <link rel="mask-icon" color="#0054ff" href="http://localhost:8080/images/safari-pinned-tab.svg">
+    <script defer="" src="./Scroll snapping after layout_files/firebase-app.js"></script>
+    <script defer="" src="./Scroll snapping after layout_files/firebase-auth.js"></script>
+    <script defer="" src="./Scroll snapping after layout_files/firebase-performance.js"></script>
+    
+    <meta id="firebase-firestore" value="//www.gstatic.com/firebasejs/6.6.1/firebase-firestore.js">
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-126406676-2');
+      ga('set', 'transport', 'beacon');
+      ga('set', 'dimension5', '3');
+      ga('send', 'pageview');
+    </script>
+    <script async="" src="./Scroll snapping after layout_files/analytics.js"></script>
+    <script type="module" src="./Scroll snapping after layout_files/bootstrap.js"></script>
+  <script src="./Scroll snapping after layout_files/default-755b562c.js" type="module"></script><style id="inert-style">
+[inert] {
+  pointer-events: none;
+  cursor: default;
+}
+
+[inert], [inert] * {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+</style></head>
+  <body class="">
+    
+    <web-snackbar-container><!---->
+      <web-snackbar><!---->
+      <div class="web-snackbar__surface">
+        
+      </div>
+    <!----></web-snackbar>
+    <!----></web-snackbar-container>
+    <div class="w-loading-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" hidden=""></div>
+    <web-header role="navigation">
+      <button class="web-header__hamburger-btn" aria-label="menu"></button>
+
+      <a href="http://localhost:8080/" class="web-header__logo-link gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Site logo">
+        <img class="web-header__logo" src="./Scroll snapping after layout_files/lockup.svg" alt="web.dev">
+      </a>
+
+      <div class="web-header__middle">
+        <div class="web-header__links">
+          <a href="http://localhost:8080/learn/" class="web-header__link gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Tab: Learn">
+            Learn
+          </a>
+
+          <a href="http://localhost:8080/measure/" class="web-header__link gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Tab: Measure">
+            Measure
+          </a>
+
+          <a href="http://localhost:8080/blog/" class="web-header__link gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Tab: Blog">
+            Blog
+          </a>
+
+          <a href="http://localhost:8080/about/" class="web-header__link gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Tab: About">
+            About
+          </a>
+        </div>
+        <web-search><!---->
+      <button class="web-search__open-btn" aria-label="Open search"></button>
+      <div class="web-search__input-wrapper" role="combobox" aria-owns="web-search-popout__list" aria-haspopup="listbox" aria-expanded="undefined">
+        <input class="web-search__input" type="text" role="search" autocomplete="off" aria-autocomplete="list" aria-controls="web-search-popout__list" aria-label="Search" placeholder="Search">
+      </div>
+      <button class="web-search__close-btn" aria-label="Close search"></button>
+      
+    <!----></web-search>
+      </div>
+
+      <web-profile-switcher-container><!---->
+      <button class="w-profile-signin">
+        Sign in
+      </button>
+    <!----></web-profile-switcher-container>
+    </web-header>
+
+    <web-side-nav class="" aria-hidden="true" inert=""><!---->
+      <nav class="web-side-nav__container">
+        <div class="web-side-nav__header">
+          <button class="web-side-nav__hide" tabindex="-1"></button>
+          <a href="http://localhost:8080/" class="gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Site logo" tabindex="-1">
+            <img class="web-side-nav__logo" src="./Scroll snapping after layout_files/lockup.svg" alt="web.dev">
+          </a>
+        </div>
+        <!----><a href="http://localhost:8080/learn/" class="web-side-nav__link gc-analytics-event" data-category="Site-Wide Custom Events" data-label="SideNav: Learn" tabindex="-1">
+        Learn
+      </a><!----><a href="http://localhost:8080/measure/" class="web-side-nav__link gc-analytics-event" data-category="Site-Wide Custom Events" data-label="SideNav: Measure" tabindex="-1">
+        Measure
+      </a><!----><a href="http://localhost:8080/blog/" class="web-side-nav__link gc-analytics-event" data-category="Site-Wide Custom Events" data-label="SideNav: Blog" tabindex="-1">
+        Blog
+      </a><!----><a href="http://localhost:8080/about/" class="web-side-nav__link gc-analytics-event" data-category="Site-Wide Custom Events" data-label="SideNav: About" tabindex="-1">
+        About
+      </a><!---->
+      </nav>
+    <!----></web-side-nav>
+    <main>
+      <div id="content">
+        
+
+
+<div class="guide-landing-page">
+  
+
+  
+  <web-actions actions="share|subscribe" authors="@yigsgu|Kaan Alsan|@argyleink"><!---->
+      <div class="w-actions">
+        <!---->
+      <a class="w-actions__fab w-actions__fab--share gc-analytics-event" data-category="web.dev" data-label="share, twitter" data-action="click" target="_blank" href="https://twitter.com/share?url=http%3A%2F%2Flocalhost%3A8080%2Fsnap-after-layout%2F&amp;text=Scroll+snapping+after+layout+by+%40yigsgu%2C+Kaan+Alsan%2C+and+%40argyleink">
+        <span>Share</span>
+      </a>
+    <!---->
+      <a class="w-actions__fab w-actions__fab--subscribe gc-analytics-event" data-category="web.dev" data-label="subscribe, newsletter" data-action="click" href="https://web.dev/subscribe" target="_blank">
+        <span>Subscribe</span>
+      </a>
+    <!---->
+      </div>
+    <!----></web-actions>
+
+  <div class="w-layout-container--narrow w-post-breadcrumbs">
+    <ul class="w-breadcrumbs">
+  <li class="w-breadcrumbs__crumb">
+    <a class="w-breadcrumbs__link w-breadcrumbs__link--left-justify gc-analytics-event" data-category="web.dev" data-label="post, home breadcrumb" data-action="click" href="http://localhost:8080/">
+      Home
+    </a>
+  </li>
+  <li class="w-breadcrumbs__crumb">
+    <a class="w-breadcrumbs__link gc-analytics-event" data-category="web.dev" data-label="post, path breadcrumb" data-action="click" href="http://localhost:8080/blog">
+      All articles
+    </a>
+  </li>
+</ul>
+  </div>
+
+  <div class="w-layout-container--narrow w-post-content">
+    <header class="w-article-header">
+      <h1 class="w-article-header__headline">Scroll snapping after layout</h1>
+      
+        <p class="w-article-header__subhead w-mb--non">
+          Starting in Chrome 81, you no longer need to add event listeners to force
+resnapping
+
+        </p>
+      
+
+      
+        <div class="w-author__published">
+          <time>Feb 22, 2020</time>
+          
+        </div>
+      
+
+      
+        <div class="w-authors w-mt--xl w-pt--sm">
+          
+            <div class="w-author">
+  <a href="http://localhost:8080/authors/yigu">
+    <img class="w-author__image " src="./Scroll snapping after layout_files/yigu.jpg" alt="Yi Gu">
+  </a>
+  <div class="w-author__info" style="display: flex; flex-direction: column; justify-content: center;">
+    <cite class="w-author__name">
+      <a class="w-author__name-link" href="http://localhost:8080/authors/yigu">Yi Gu</a>
+    </cite>
+    <ul class="w-author__link-list">
+      <li class="w-author__link-listitem">
+        <a class="w-author__link" href="https://twitter.com/yigsgu">Twitter</a>
+      </li>
+      <li class="w-author__link-listitem">
+        <a class="w-author__link" href="https://github.com/yi-gu">GitHub</a>
+      </li>
+      
+    </ul>
+  </div>
+</div>
+          
+            <div class="w-author">
+  <a href="http://localhost:8080/authors/alsan">
+    <img class="w-author__image " src="./Scroll snapping after layout_files/alsan.jpg" alt="Kaan Alsan">
+  </a>
+  <div class="w-author__info" style="display: flex; flex-direction: column; justify-content: center;">
+    <cite class="w-author__name">
+      <a class="w-author__name-link" href="http://localhost:8080/authors/alsan">Kaan Alsan</a>
+    </cite>
+    <ul class="w-author__link-list">
+      
+      
+      
+    </ul>
+  </div>
+</div>
+          
+            <div class="w-author">
+  <a href="http://localhost:8080/authors/adamargyle">
+    <img class="w-author__image " src="./Scroll snapping after layout_files/adamargyle.jpg" alt="Adam Argyle">
+  </a>
+  <div class="w-author__info" style="display: flex; flex-direction: column; justify-content: center;">
+    <cite class="w-author__name">
+      <a class="w-author__name-link" href="http://localhost:8080/authors/adamargyle">Adam Argyle</a>
+    </cite>
+    <ul class="w-author__link-list">
+      <li class="w-author__link-listitem">
+        <a class="w-author__link" href="https://twitter.com/argyleink">Twitter</a>
+      </li>
+      <li class="w-author__link-listitem">
+        <a class="w-author__link" href="https://github.com/argyleink">GitHub</a>
+      </li>
+      <li class="w-author__link-listitem">
+        <a class="w-author__link" href="https://glitch.com/@argyleink">Glitch</a>
+      </li>
+    </ul>
+  </div>
+</div>
+          
+        </div>
+      
+    </header>
+
+    
+
+    <p><a href="https://developers.google.com/web/updates/2018/07/css-scroll-snap">CSS Scroll Snap</a>
+allows web developers to create well-controlled scroll experiences by declaring
+scroll snapping positions. One shortcoming of the current implementation is that
+scroll snapping does not work well when the layout changes. e.g. the viewport is
+resized, the device is rotated etc. This shortcoming is fixed in Chrome 81.</p>
+<h2 id="interoperability">Interoperability <a class="w-headline-link" href="http://localhost:8080/snap-after-layout/#interoperability" aria-hidden="true">#</a></h2>
+<p>Many browsers have basic support for CSS Scroll Snap. See <a href="https://caniuse.com/#feat=css-snappoints">Can I use CSS
+ScrollSnap?</a> for more information.</p>
+<p>Chrome is currently the only browser to implement scroll snapping after layout
+changes.  Firefox has a
+<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1530253">ticket</a> open for
+implementing this and Safari has <a href="https://bugs.webkit.org/show_bug.cgi?id=144826">one
+open</a> for re-snapping after a
+scroller's content changes. For now, you can simulate this behaviour by adding
+the following code to event listeners to force a snapping to execute:</p>
+<web-copy-code><button class="web-copy-code__button"></button><pre class="language-javascript"><code class="language-javascript">scroller<span class="token punctuation">.</span><span class="token function">scrollBy</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+</web-copy-code><p>However, this will not guarantee that the scroller snaps back to the same
+element.</p>
+<h2 id="background">Background <a class="w-headline-link" href="http://localhost:8080/snap-after-layout/#background" aria-hidden="true">#</a></h2>
+<h3 id="css-scroll-snap">CSS Scroll Snap <a class="w-headline-link" href="http://localhost:8080/snap-after-layout/#css-scroll-snap" aria-hidden="true">#</a></h3>
+<p>The CSS Scroll Snap feature allows web developers to create well-controlled
+scroll experiences by declaring scroll snapping positions. These positions
+ensure that scrollable content is properly aligned with its container to
+overcome the issues of imprecise scrolling. In other words, scroll snapping:</p>
+<ul>
+<li>Prevents awkward scroll positions when scrolling.</li>
+<li>Creates the effect of paging through content.</li>
+</ul>
+<p>Paginated articles and image carousels are two common use cases for scroll
+snaps.</p>
+<figure class="w-figure">
+  <img src="./Scroll snapping after layout_files/css-scroll-snap-example.png" alt="Example of CSS scroll snap.">
+  <figcaption class="w-figcaption">Example of CSS scroll snap. At the end of
+    scrolling an image horizontal center is aligned with the horizontal center
+    of the scroll container.
+  </figcaption>
+</figure>
+<h3 id="shortcomings">Shortcomings <a class="w-headline-link" href="http://localhost:8080/snap-after-layout/#shortcomings" aria-hidden="true">#</a></h3>
+<figure class="w-figure w-figure--center">
+  <video controls="" autoplay="" loop="" muted="" class="w-screenshot">
+    <source src="./resizing-breaks-snap-positions.webm" type="video/webm;">
+    <source src="./resizing-breaks-snap-positions.mp4" type="video/mp4;">
+  </video>
+ <figcaption class="w-figcaption">
+    Snap positions get lost when resizing a window.
+  </figcaption>
+</figure>
+<p>Scroll snapping allows users to effortlessly navigate through content, but its
+inability to adapt to changes in content and layout blocks some of its potential
+benefits. As shown in the <a href="https://codepen.io/argyleink/pen/MWWpOmz">example</a>
+above, users have to re-adjust scroll positions whenever resizing a window to
+find the previously snapped element. Some common scenarios that cause layout
+change are:</p>
+<ul>
+<li>Resizing a window</li>
+<li>Rotating a device</li>
+<li>Opening DevTools</li>
+</ul>
+<p>The first two scenarios make CSS Scroll Snap less appealing for users and the
+third one is a nightmare for developers when debugging. Developers also need to
+consider these shortcomings when trying to make a dynamic experience that
+supports actions such as adding, removing, or moving content.</p>
+<p>A common fix for this is to add listeners that execute a programmatic scroll via
+Javascript to force snapping to execute whenever any of these mentioned layout
+changes happen. This workaround can be ineffective when the user expects the
+scroller to snap back to the same content as before. Any further handling with
+Javascript seems to almost defeat the purpose of this CSS feature.</p>
+<h2 id="native-support-for-re-snapping-after-layout-changes-in-chrome-81">Native support for re-snapping after layout changes in Chrome 81 <a class="w-headline-link" href="http://localhost:8080/snap-after-layout/#native-support-for-re-snapping-after-layout-changes-in-chrome-81" aria-hidden="true">#</a></h2>
+<p>The mentioned shortcomings no longer exist in Chrome 81: scrollers will remain
+snapped even after changing layout. They will re-evaluate scroll positions after
+changing their layout, and re-snap to the closest snap position if necessary. If
+the scroller was previously snapped to an element that still exists after the
+layout change, then the scroller will try to snap back to it.</p>
+<div class="w-columns">
+<figure class="w-compare">
+  <p class="w-compare__label w-compare__label--worse">
+    Snap position lost
+  </p>
+  <figure class="w-figure w-figure--center">
+    <video controls="" autoplay="" loop="" muted="" class="w-screenshot">
+      <source src="./snap-positions-lost.webm" type="video/webm;">
+      <source src="./snap-positions-lost.mp4" type="video/mp4;">
+    </video>
+  </figure>
+  <figcaption class="w-compare__caption"> <p> Rotating a device <strong>does not</strong> preserve the snap positions in Chrome 80. </p> </figcaption>
+</figure>
+<figure class="w-compare">
+  <p class="w-compare__label w-compare__label--better">
+    Snap position preserved
+  </p>
+  <figure class="w-figure w-figure--center">
+    <video controls="" autoplay="" loop="" muted="" class="w-screenshot">
+      <source src="./snap-positions-preserved.webm" type="video/webm;">
+      <source src="./snap-positions-preserved.mp4" type="video/mp4;">
+    </video>
+  </figure>
+  <figcaption class="w-compare__caption"> <p> Rotating a device <strong>does</strong> preserve the snap positions in Chrome 81. </p> </figcaption>
+</figure>
+</div>
+<p>See the <a href="https://drafts.csswg.org/css-scroll-snap-1/#re-snap">Re-snapping after layout changes
+specification</a> for more
+details.</p>
+<div class="w-aside w-aside--caution">
+<p><strong>Caution:</strong>  Snapping is also executed when the page loads. This
+affects the initial scroll offset of scrollers using the scroll snap feature.</p>
+</div>
+<h2 id="example:-sticky-scrollbars">Example: Sticky scrollbars <a class="w-headline-link" href="http://localhost:8080/snap-after-layout/#example:-sticky-scrollbars" aria-hidden="true">#</a></h2>
+<p>With "Snap after layout", developers can implement sticky scrollbars with a few
+lines of CSS:</p>
+<web-copy-code><button class="web-copy-code__button"></button><pre class="language-css"><code class="language-css"><span class="token selector">.container</span> <span class="token punctuation">{</span><br>  <span class="token property">scroll-snap-type</span><span class="token punctuation">:</span> y proximity<span class="token punctuation">;</span><br><span class="token punctuation">}</span><br><br><span class="token selector">.container::after</span> <span class="token punctuation">{</span><br>  <span class="token property">scroll-snap-align</span><span class="token punctuation">:</span> end<span class="token punctuation">;</span><br>  <span class="token property">display</span><span class="token punctuation">:</span> block<span class="token punctuation">;</span><br><span class="token punctuation">}</span></code></pre>
+</web-copy-code><p>Want to learn more? See the following <a href="https://codepen.io/argyleink/pen/RwPWqKe">demo chat
+UI</a> for visuals.</p>
+<figure class="w-figure w-figure--center">
+  <video controls="" autoplay="" loop="" muted="" class="w-screenshot">
+    <source src="./scroll-snap-bottom.webm" type="video/webm;">
+    <source src="./scroll-snap-bottom.mp4" type="video/mp4;">
+  </video>
+  <figcaption class="w-figcaption">
+    Adding a new message triggers re-snap which makes it stick to the bottom in
+    Chrome 81.
+  </figcaption>
+</figure>
+<h2 id="future-work">Future Work <a class="w-headline-link" href="http://localhost:8080/snap-after-layout/#future-work" aria-hidden="true">#</a></h2>
+<p>All re-snapping scroll effects are currently instant; a potential follow-up is
+to support re-snapping with <a href="https://developers.google.com/web/updates/2016/02/smooth-scrolling-in-chrome-49">smooth scrolling
+effects</a>.
+See the <a href="https://github.com/w3c/csswg-drafts/issues/4609">specification issue</a>
+for details.</p>
+<h2 id="feedback">Feedback <a class="w-headline-link" href="http://localhost:8080/snap-after-layout/#feedback" aria-hidden="true">#</a></h2>
+<p>Your feedback is invaluable in making re-snapping after layout better, so go on
+and try it out and <a href="https://bugs.chromium.org/p/chromium/issues/detail?id=866127">let us
+know</a> what you
+think.</p>
+
+
+    <div class="w-chips">
+      
+    </div>
+
+    <div class="w-post-github-link w-mt--l w-mb--l">
+      <span class="w-mr--sm">
+        
+        Last updated: <time>Feb 22, 2020</time>
+        
+      </span>
+      <a href="https://github.com/GoogleChrome/web.dev/blob/master/src/site/content/en/blog/snap-after-layout/index.md">
+        Improve article
+      </a>
+       
+    </div>
+
+    
+  </div>
+
+  
+    
+    <nav class="w-article-navigation">
+  <a class="w-article-navigation__link w-article-navigation__link--back  gc-analytics-event" data-category="web.dev" data-label="navigation, go back" data-action="click" href="http://localhost:8080/blog">
+    Return to all articles
+  </a>
+  <a class="w-article-navigation__link w-article-navigation__link--forward gc-analytics-event" data-category="web.dev" data-label="navigation, go forward" data-action="click" href="http://localhost:8080/customize-install/">
+    <div class="w-article-navigation__column">
+      <h3 class="w-article-navigation__heading">Next article</h3>
+      Provide a custom install experience
+    </div>
+  </a>
+</nav>
+  
+
+  
+  
+</div>
+
+      </div>
+    </main>
+    <footer class="w-footer">
+  <nav class="w-footer__linkboxes">
+    <ul class="w-footer__linkboxes-list">
+      <li class="w-footer__linkbox">
+        <h3 class="w-footer__linkbox-heading">Contribute</h3>
+        <ul class="w-footer__linkbox-list">
+          <li class="w-footer__linkbox-item">
+            <a href="https://github.com/GoogleChrome/web.dev/issues/new?assignees=&amp;labels=bug&amp;template=bug_report.md&amp;title=" class="w-footer__linkbox-link" data-category="Site-Wide Custom Events" data-label="Footer Link (index 1)">
+              File a bug
+            </a>
+          </li>
+          <li class="w-footer__linkbox-item">
+            <a href="https://github.com/googlechrome/web.dev" class="w-footer__linkbox-link" data-category="Site-Wide Custom Events" data-label="Footer Link (index 2)">
+              View source
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="w-footer__linkbox">
+        <h3 class="w-footer__linkbox-heading">Related content</h3>
+        <ul class="w-footer__linkbox-list">
+          <li class="w-footer__linkbox-item">
+            <a href="https://developers.google.com/web/updates/" class="w-footer__linkbox-link" data-category="Site-Wide Custom Events" data-label="Footer Link (index 1)">
+              Updates
+            </a>
+          </li>
+          <li class="w-footer__linkbox-item">
+            <a href="https://developers.google.com/web/" class="w-footer__linkbox-link" data-category="Site-Wide Custom Events" data-label="Footer Link (index 2)">
+              Web Fundamentals
+            </a>
+          </li>
+          <li class="w-footer__linkbox-item">
+            <a href="https://developers.google.com/web/showcase/" class="w-footer__linkbox-link" data-category="Site-Wide Custom Events" data-label="Footer Link (index 3)">
+              Case studies
+            </a>
+          </li>
+          <li class="w-footer__linkbox-item">
+            <a href="https://devwebfeed.appspot.com/" class="w-footer__linkbox-link" data-category="Site-Wide Custom Events" data-label="Footer Link (index 4)">
+              DevWeb Content Firehose
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="w-footer__linkbox">
+        <h3 class="w-footer__linkbox-heading">Connect</h3>
+        <ul class="w-footer__linkbox-list">
+          <li class="w-footer__linkbox-item">
+            <a href="https://www.twitter.com/@ChromiumDev" class="w-footer__linkbox-link" data-category="Site-Wide Custom Events" data-label="Footer Link (index 1)">
+              Twitter
+            </a>
+          </li>
+          <li class="w-footer__linkbox-item">
+            <a href="https://www.youtube.com/user/ChromeDevelopers" class="w-footer__linkbox-link" data-category="Site-Wide Custom Events" data-label="Footer Link (index 2)">
+              YouTube
+            </a>
+          </li>
+          <li class="w-footer__linkbox-item">
+            <a href="https://medium.com/dev-channel" class="w-footer__linkbox-link" data-category="Site-Wide Custom Events" data-label="Footer Link (index 3)">
+              Medium
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="w-footer__utility">
+    <nav class="w-footer__utility-nav">
+      <a href="https://developers.google.com/" class="w-footer__utility-logo-link" data-category="Site-Wide Custom Events" data-label="Footer Google Developers Link">
+        <img class="w-footer__utility-logo" src="./Scroll snapping after layout_files/lockup-color.png" alt="Google Developers">
+      </a>
+      <ul class="w-footer__utility-list">
+        <li class="w-footer__utility-item">
+          <a class="w-footer__utility-link" href="https://developer.chrome.com/home" data-category="Site-Wide Custom Events" data-label="Footer Chrome Link">
+            Chrome
+          </a>
+        </li>
+        <li class="w-footer__utility-item">
+          <a class="w-footer__utility-link" href="https://firebase.google.com/" data-category="Site-Wide Custom Events" data-label="Footer Firebase Link">
+            Firebase
+          </a>
+        </li>
+        <li class="w-footer__utility-item">
+          <a class="w-footer__utility-link" href="https://cloud.google.com/" data-category="Site-Wide Custom Events" data-label="Footer Google Cloud Platform Link">
+            Google Cloud Platform
+          </a>
+        </li>
+        <li class="w-footer__utility-item">
+          <a class="w-footer__utility-link" href="https://developers.google.com/products" data-category="Site-Wide Custom Events" data-label="Footer All products Link">
+            All products
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <nav class="w-footer__utility-nav">
+      <ul class="w-footer__utility-list">
+        <li class="w-footer__utility-item
+            ">
+          <a class="w-footer__utility-link" href="https://policies.google.com/" data-category="Site-Wide Custom Events" data-label="Footer Terms and Privacy link">
+            Terms &amp; Privacy
+          </a>
+        </li>
+      </ul>
+      <div class="w-footer__license">
+        <p>
+          Except as otherwise noted, the content of this page is licensed
+          under the
+          <a href="https://creativecommons.org/licenses/by/4.0/">
+          Creative Commons Attribution 4.0 License
+          </a>, and code samples are licensed under the
+          <a href="https://www.apache.org/licenses/LICENSE-2.0">
+          Apache 2.0 License</a>. For details, see the
+          <a href="https://developers.google.com/site-policies">
+          Google Developers Site Policies</a>.
+        </p>
+      </div>
+    </nav>
+  </div>
+</footer>
+
+  
+
+</body></html>
